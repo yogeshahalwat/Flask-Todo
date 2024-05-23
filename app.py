@@ -9,7 +9,7 @@ db= SQLAlchemy(app)
 
 class Todo(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-    title = db.Column(db.String(150))
+    task = db.Column(db.String(150))
     complete= db.Column(db.Boolean)
 
 
@@ -20,10 +20,9 @@ def index():
 
 @app.route("/add", methods=["POST","GET"])
 def add():
-    title=request.form.get("title")
+    task=request.form.get("task")
     # title=request.args.get("title")   # to get args from get
-    print(title)
-    new_todo=Todo(title=title,complete=False)
+    new_todo=Todo(task=task,complete=False)
     db.session.add(new_todo)
     db.session.commit()
     return redirect(url_for("index"))
